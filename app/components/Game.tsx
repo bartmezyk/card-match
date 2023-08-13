@@ -3,10 +3,10 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import { shuffleArrayHelper } from "../common/helpers";
-import { CARDS } from "../common/constants";
-import { CardInterface } from "../common/types";
-import { Card } from "./Card";
+import { shuffleArrayHelper } from "common/helpers";
+import { CARDS } from "common/constants";
+import { CardInterface } from "common/types";
+import { Card } from "components/Card";
 
 export const Game = () => {
   const [cards, setCards] = useState<CardInterface[]>([]);

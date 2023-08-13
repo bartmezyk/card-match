@@ -1,4 +1,4 @@
-import { CardInterface } from "./types";
+import { CardInterface } from "common/types";
 
 export const CARDS: CardInterface[] = [
   {

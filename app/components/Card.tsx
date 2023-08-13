@@ -2,7 +2,7 @@
 
 import styled from "styled-components";
 
-import { CardInterface } from "../common/types";
+import { CardInterface } from "common/types";
 
 interface CardProps {
   card: CardInterface;
