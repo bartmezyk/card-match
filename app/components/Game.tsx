@@ -10,15 +10,28 @@ import { Card } from "components/Card";
 
 export const Game = () => {
   const [cards, setCards] = useState<CardInterface[]>([]);
+  const [openCardId, setOpenCardId] = useState<number>();
+
+  const cardClick = (cardId: number) => {
+    setOpenCardId(cardId);
+  };
+
+  const startGame = () => {
+    setOpenCardId(undefined);
+    setCards([...shuffleArrayHelper(CARDS)]);
+  };
 
   return (
     <>
-      <button onClick={() => setCards([...shuffleArrayHelper(CARDS)])}>
-        Start game
-      </button>
+      <button onClick={() => startGame()}>Start game</button>
       <CardsContainer>
-        {cards.map((card) => (
-          <Card key={card.id} card={card} />
+        {cards.map(({ id, name }) => (
+          <Card
+            key={id}
+            name={name}
+            handleCardClick={() => cardClick(id)}
+            isOpen={id === openCardId}
+          />
         ))}
       </CardsContainer>
     </>

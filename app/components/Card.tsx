@@ -2,18 +2,20 @@
 
 import styled from "styled-components";
 
-import { CardInterface } from "common/types";
-
 interface CardProps {
-  card: CardInterface;
+  name: string;
+  isOpen: boolean;
+  handleCardClick: () => void;
 }
 
-export const Card = ({ card }: CardProps) => (
-  <StyledCard>{card.name}</StyledCard>
+export const Card = ({ name, isOpen, handleCardClick }: CardProps) => (
+  <StyledCard $isOpen={isOpen} name={name} onClick={handleCardClick} />
 );
 
-const StyledCard = styled.div`
-  background-color: rebeccapurple;
+const StyledCard = styled.div<{ $isOpen: boolean; name: string }>`
+  background-image: ${({ $isOpen, name }) =>
+    $isOpen ? `url("./img/${name}.png")` : `url("./img/cover.png")`};
   border: 1px solid white;
   border-radius: 5px;
+  cursor: pointer;
 `;
