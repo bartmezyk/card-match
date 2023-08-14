@@ -94,14 +94,16 @@ export const Game = () => {
 };
 
 const GameContainer = styled.div`
-  display: grid;
-  place-items: center;
-  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px auto;
 `;
 
 const Header = styled.h1`
   font-size: 36px;
   text-transform: capitalize;
+  text-align: center;
 `;
 
 const Button = styled.button`
@@ -123,8 +125,11 @@ const Button = styled.button`
 
 const CardsContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 200px);
-  grid-template-rows: repeat(3, 200px);
+  place-content: center;
+  width: 830px;
+  max-width: calc(100vw - 80px);
+  grid-template-columns: repeat(auto-fill, 200px);
+  grid-auto-rows: 200px;
   gap: 10px;
 `;
 
