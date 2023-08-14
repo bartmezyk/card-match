@@ -62,6 +62,8 @@ export const Game = () => {
   }, [secondSelectedCard]);
 
   useEffect(() => {
+    startGame();
+
     return () => {
       clearTimeout(cardsOpenTimer);
     };
@@ -70,8 +72,9 @@ export const Game = () => {
   }, []);
 
   return (
-    <>
-      <button onClick={() => startGame()}>Start game</button>
+    <GameContainer>
+      <Header>card match</Header>
+      <Button onClick={() => startGame()}>new game</Button>
       <CardsContainer>
         {cards.map((card) => (
           <Card
@@ -86,9 +89,37 @@ export const Game = () => {
           />
         ))}
       </CardsContainer>
-    </>
+    </GameContainer>
   );
 };
+
+const GameContainer = styled.div`
+  display: grid;
+  place-items: center;
+  margin: 20px 0;
+`;
+
+const Header = styled.h1`
+  font-size: 36px;
+  text-transform: capitalize;
+`;
+
+const Button = styled.button`
+  width: 140px;
+  height: 35px;
+  background-color: transparent;
+  color: white;
+  font-size: 20px;
+  text-transform: capitalize;
+  cursor: pointer;
+  border: 2px solid white;
+  border-radius: 4px;
+  margin: 25px 0;
+
+  &:hover {
+    background-color: #50255c;
+  }
+`;
 
 const CardsContainer = styled.div`
   display: grid;
@@ -100,8 +131,13 @@ const CardsContainer = styled.div`
 const Card = styled.div<{ $isOpen: boolean; $name: string }>`
   background-image: ${({ $isOpen, $name }) =>
     `url("./img/${$isOpen ? $name : "cover"}.png")`};
-  border: 2px solid white;
-  border-radius: 5px;
   cursor: pointer;
   pointer-events: ${({ $isOpen }) => $isOpen && "none"};
+  border: 2px solid;
+  border-color: ${({ $isOpen }) => ($isOpen ? "gray" : "white")};
+  border-radius: 5px;
+
+  &:hover {
+    border-color: #956596;
+  }
 `;
