@@ -12,13 +12,14 @@ export const Game = () => {
   const [firstSelectedCard, setFirstSelectedCard] = useState<CardInterface>();
   const [secondSelectedCard, setSecondSelectedCard] = useState<CardInterface>();
   const [openCardIds, setOpenCardIds] = useState<number[]>([]);
-
-  let cardsOpenTimer: NodeJS.Timeout;
+  const [cardsOpenTimer, setCardsOpenTimer] = useState<NodeJS.Timeout>();
+  const [turns, setTurns] = useState(0);
 
   const startGame = () => {
     clearSelectedCards();
     setOpenCardIds([]);
     clearTimeout(cardsOpenTimer);
+    setTurns(0);
     setCards([...shuffleArrayHelper(CARDS)]);
   };
 
@@ -35,6 +36,8 @@ export const Game = () => {
 
   const checkMatch = () => {
     if (firstSelectedCard && secondSelectedCard) {
+      setTurns((prev) => prev + 1);
+
       if (firstSelectedCard.name === secondSelectedCard.name) {
         clearSelectedCards();
         setOpenCardIds((prev) => [
@@ -46,9 +49,11 @@ export const Game = () => {
         return;
       }
 
-      cardsOpenTimer = setTimeout(() => {
-        clearSelectedCards();
-      }, 1000);
+      setCardsOpenTimer(
+        setTimeout(() => {
+          clearSelectedCards();
+        }, 1000)
+      );
     }
   };
 
@@ -90,6 +95,7 @@ export const Game = () => {
           />
         ))}
       </CardsContainer>
+      <h4>Turns: {turns}</h4>
     </GameContainer>
   );
 };
@@ -132,6 +138,7 @@ const CardsContainer = styled.div`
   grid-template-columns: repeat(auto-fill, 200px);
   grid-auto-rows: 200px;
   gap: 10px;
+  margin-bottom: 15px;
 `;
 
 const Card = styled.div<{ $isOpen: boolean; $name: string }>`
