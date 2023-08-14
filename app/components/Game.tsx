@@ -18,6 +18,7 @@ export const Game = () => {
   const startGame = () => {
     clearSelectedCards();
     setOpenCardIds([]);
+    clearTimeout(cardsOpenTimer);
     setCards([...shuffleArrayHelper(CARDS)]);
   };
 
