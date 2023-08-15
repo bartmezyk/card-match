@@ -7,6 +7,7 @@ import { shuffleArrayHelper } from "common/helpers";
 import { CARDS } from "common/constants";
 import { CardInterface } from "common/types";
 import { GameTimer } from "components/GameTimer";
+import { Card } from "./Card";
 
 export const Game = () => {
   const [cards, setCards] = useState<CardInterface[]>([]);
@@ -92,13 +93,13 @@ export const Game = () => {
         {cards.map((card) => (
           <Card
             key={card.id}
-            $name={card.name}
-            onClick={() => handleCardClick(card)}
-            $isOpen={
+            handleClick={() => handleCardClick(card)}
+            isOpen={
               card.id === firstSelectedCard?.id ||
               card.id === secondSelectedCard?.id ||
               openCardIds.some((id) => id === card.id)
             }
+            name={card.name}
           />
         ))}
       </CardsContainer>
@@ -152,18 +153,4 @@ const CardsContainer = styled.div`
   grid-auto-rows: 200px;
   gap: 10px;
   margin-bottom: 15px;
-`;
-
-const Card = styled.div<{ $isOpen: boolean; $name: string }>`
-  background-image: ${({ $isOpen, $name }) =>
-    `url("./img/${$isOpen ? $name : "cover"}.png")`};
-  cursor: pointer;
-  pointer-events: ${({ $isOpen }) => $isOpen && "none"};
-  border: 2px solid;
-  border-color: ${({ $isOpen }) => ($isOpen ? "gray" : "white")};
-  border-radius: 5px;
-
-  &:hover {
-    border-color: #956596;
-  }
 `;
