@@ -5,4 +5,5 @@ export interface CardInterface {
 
 export interface GameCardInterface extends CardInterface {
   id: number;
+  disabled: boolean;
 }

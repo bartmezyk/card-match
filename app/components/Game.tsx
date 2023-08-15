@@ -15,14 +15,12 @@ export const Game = () => {
     useState<GameCardInterface>();
   const [secondSelectedCard, setSecondSelectedCard] =
     useState<GameCardInterface>();
-  const [openCardIds, setOpenCardIds] = useState<number[]>([]);
   const [cardsOpenTimer, setCardsOpenTimer] = useState<NodeJS.Timeout>();
   const [startGameDate, setStartGameDate] = useState<Date>();
   const [turns, setTurns] = useState(0);
 
   const startGame = () => {
     clearSelectedCards();
-    setOpenCardIds([]);
     clearTimeout(cardsOpenTimer);
     setStartGameDate(undefined);
     setTurns(0);
@@ -50,11 +48,14 @@ export const Game = () => {
 
       if (firstSelectedCard.pairId === secondSelectedCard.pairId) {
         clearSelectedCards();
-        setOpenCardIds((prev) => [
-          ...prev,
-          firstSelectedCard.id,
-          secondSelectedCard.id,
-        ]);
+
+        setCards((prev) =>
+          prev.map((card) =>
+            card.pairId === secondSelectedCard.pairId
+              ? { ...card, disabled: true }
+              : card
+          )
+        );
 
         return;
       }
@@ -99,7 +100,7 @@ export const Game = () => {
             isOpen={
               card.id === firstSelectedCard?.id ||
               card.id === secondSelectedCard?.id ||
-              openCardIds.some((id) => id === card.id)
+              card.disabled
             }
             name={card.name}
           />
@@ -109,7 +110,7 @@ export const Game = () => {
       {startGameDate && (
         <Timer
           startGameDate={startGameDate}
-          stopCounting={openCardIds.length === 12}
+          stopCounting={!cards.some((card) => !card.disabled)}
         />
       )}
     </GameContainer>
