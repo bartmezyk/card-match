@@ -4,11 +4,11 @@ import styled from "styled-components";
 import { formatTimerHelper } from "common/helpers";
 
 interface TimerProps {
-  startGameDate: Date;
+  startDate: Date;
   stopCounting: boolean;
 }
 
-export const Timer = ({ startGameDate, stopCounting }: TimerProps) => {
+export const Timer = ({ startDate, stopCounting }: TimerProps) => {
   const [time, setTime] = useState(0);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
 
@@ -23,7 +23,7 @@ export const Timer = ({ startGameDate, stopCounting }: TimerProps) => {
   useEffect(() => {
     setTimer(
       setInterval(() => {
-        setTime(new Date().getTime() - startGameDate.getTime());
+        setTime(new Date().getTime() - startDate.getTime());
       }, 1)
     );
 

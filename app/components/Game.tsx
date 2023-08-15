@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import Spinner from "react-spinner-material";
 
 import { prepareCardsHelper } from "common/helpers";
 import { CARDS } from "common/constants";
@@ -16,20 +17,23 @@ export const Game = () => {
   const [secondSelectedCard, setSecondSelectedCard] =
     useState<GameCardInterface>();
   const [cardsOpenTimer, setCardsOpenTimer] = useState<NodeJS.Timeout>();
-  const [startGameDate, setStartGameDate] = useState<Date>();
+  const [startDate, setStartDate] = useState<Date>();
   const [turns, setTurns] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const startGame = () => {
+    setIsLoading(true);
+    setTimeout(() => setIsLoading(false), 500);
     clearSelectedCards();
     clearTimeout(cardsOpenTimer);
-    setStartGameDate(undefined);
+    setStartDate(undefined);
     setTurns(0);
     setCards(prepareCardsHelper(CARDS));
   };
 
   const handleCardClick = (card: GameCardInterface) => {
-    if (!startGameDate) {
-      setStartGameDate(new Date());
+    if (!startDate) {
+      setStartDate(new Date());
     }
 
     if (secondSelectedCard || !firstSelectedCard) {
@@ -92,24 +96,35 @@ export const Game = () => {
     <GameContainer>
       <Header>card match</Header>
       <Button onClick={() => startGame()}>new game</Button>
-      <CardsContainer>
-        {cards.map((card) => (
-          <Card
-            key={card.id}
-            handleClick={() => handleCardClick(card)}
-            isOpen={
-              card.id === firstSelectedCard?.id ||
-              card.id === secondSelectedCard?.id ||
-              card.disabled
-            }
-            name={card.name}
-          />
-        ))}
-      </CardsContainer>
-      <h4>Turns: {turns}</h4>
-      {startGameDate && (
+      {isLoading ? (
+        <Spinner
+          radius={60}
+          color="#FFF"
+          stroke={5}
+          style={{ marginTop: 70 }}
+        />
+      ) : (
+        <>
+          <CardsContainer>
+            {cards.map((card) => (
+              <Card
+                key={card.id}
+                handleClick={() => handleCardClick(card)}
+                isOpen={
+                  card.id === firstSelectedCard?.id ||
+                  card.id === secondSelectedCard?.id ||
+                  card.disabled
+                }
+                name={card.name}
+              />
+            ))}
+          </CardsContainer>
+          <h4>Turns: {turns}</h4>
+        </>
+      )}
+      {startDate && (
         <Timer
-          startGameDate={startGameDate}
+          startDate={startDate}
           stopCounting={!cards.some((card) => !card.disabled)}
         />
       )}
