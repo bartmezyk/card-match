@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { shuffleArrayHelper } from "common/helpers";
 import { CARDS } from "common/constants";
 import { CardInterface } from "common/types";
+import { GameTimer } from "components/GameTimer";
 
 export const Game = () => {
   const [cards, setCards] = useState<CardInterface[]>([]);
@@ -13,17 +14,23 @@ export const Game = () => {
   const [secondSelectedCard, setSecondSelectedCard] = useState<CardInterface>();
   const [openCardIds, setOpenCardIds] = useState<number[]>([]);
   const [cardsOpenTimer, setCardsOpenTimer] = useState<NodeJS.Timeout>();
+  const [startGameDate, setStartGameDate] = useState<Date>();
   const [turns, setTurns] = useState(0);
 
   const startGame = () => {
     clearSelectedCards();
     setOpenCardIds([]);
     clearTimeout(cardsOpenTimer);
+    setStartGameDate(undefined);
     setTurns(0);
     setCards([...shuffleArrayHelper(CARDS)]);
   };
 
   const handleCardClick = (card: CardInterface) => {
+    if (!startGameDate) {
+      setStartGameDate(new Date());
+    }
+
     if (secondSelectedCard || !firstSelectedCard) {
       setFirstSelectedCard(card);
       setSecondSelectedCard(undefined);
@@ -68,7 +75,7 @@ export const Game = () => {
   }, [secondSelectedCard]);
 
   useEffect(() => {
-    startGame();
+    setCards([...shuffleArrayHelper(CARDS)]);
 
     return () => {
       clearTimeout(cardsOpenTimer);
@@ -96,6 +103,12 @@ export const Game = () => {
         ))}
       </CardsContainer>
       <h4>Turns: {turns}</h4>
+      {startGameDate && (
+        <GameTimer
+          startGameDate={startGameDate}
+          stopCounting={openCardIds.length === 12}
+        />
+      )}
     </GameContainer>
   );
 };
