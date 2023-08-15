@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { shuffleArrayHelper } from "common/helpers";
+import { randomizeArrayHelper } from "common/helpers";
 import { CARDS } from "common/constants";
 import { CardInterface } from "common/types";
 import { GameTimer } from "components/GameTimer";
@@ -24,7 +24,7 @@ export const Game = () => {
     clearTimeout(cardsOpenTimer);
     setStartGameDate(undefined);
     setTurns(0);
-    setCards([...shuffleArrayHelper(CARDS)]);
+    setCards([...randomizeArrayHelper(CARDS)]);
   };
 
   const handleCardClick = (card: CardInterface) => {
@@ -76,7 +76,7 @@ export const Game = () => {
   }, [secondSelectedCard]);
 
   useEffect(() => {
-    setCards([...shuffleArrayHelper(CARDS)]);
+    setCards([...randomizeArrayHelper(CARDS)]);
 
     return () => {
       clearTimeout(cardsOpenTimer);
