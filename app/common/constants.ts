@@ -2,51 +2,27 @@ import { CardInterface } from "common/types";
 
 export const CARDS: CardInterface[] = [
   {
-    id: 0,
-    name: 'helmet',
+    pairId: 0,
+    name: 'helmet.png',
   },
   {
-    id: 1,
-    name: 'helmet',
+    pairId: 1,
+    name: 'potion.png',
   },
   {
-    id: 2,
-    name: 'potion',
+    pairId: 2,
+    name: 'ring.png',
   },
   {
-    id: 3,
-    name: 'potion',
+    pairId: 3,
+    name: 'scroll.png',
   },
   {
-    id: 4,
-    name: 'ring',
+    pairId: 4,
+    name: 'shield.png',
   },
   {
-    id: 5,
-    name: 'ring',
-  },
-  {
-    id: 6,
-    name: 'scroll',
-  },
-  {
-    id: 7,
-    name: 'scroll',
-  },
-  {
-    id: 8,
-    name: 'shield',
-  },
-  {
-    id: 9,
-    name: 'shield',
-  },
-  {
-    id: 10,
-    name: 'sword',
-  },
-  {
-    id: 11,
-    name: 'sword',
+    pairId: 5,
+    name: 'sword.png',
   },
 ]

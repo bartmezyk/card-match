@@ -1,4 +1,8 @@
 export interface CardInterface {
-  id: number;
+  pairId: number;
   name: string;
+}
+
+export interface GameCardInterface extends CardInterface {
+  id: number;
 }

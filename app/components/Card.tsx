@@ -46,6 +46,6 @@ const FrontCard = styled.div`
 `;
 
 const BackCard = styled(FrontCard)<{ $name: string }>`
-  background-image: ${({ $name }) => `url("./img/${$name}.png")`};
+  background-image: ${({ $name }) => `url("./img/${$name}")`};
   transform: rotateY(180deg);
 `;

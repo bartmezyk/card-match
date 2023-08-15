@@ -1,5 +1,9 @@
-export const randomizeArrayHelper = <T>(array: T[]): T[] => {
-  return array.sort(() => Math.random() - 0.5);
+import { CardInterface, GameCardInterface } from "common/types";
+
+export const prepareCardsHelper = (cards: CardInterface[]): GameCardInterface[] => {
+  return [...cards, ...cards]
+    .sort(() => Math.random() - 0.5)
+    .map((card, id) => ({ ...card, id }));
 }
 
 export const formatTimerHelper = (milliseconds: number): string => {

@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 import { formatTimerHelper } from "common/helpers";
 
-interface GameTimerProps {
+interface TimerProps {
   startGameDate: Date;
   stopCounting: boolean;
 }
 
-export const GameTimer = ({ startGameDate, stopCounting }: GameTimerProps) => {
+export const Timer = ({ startGameDate, stopCounting }: TimerProps) => {
   const [time, setTime] = useState(0);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
 
@@ -34,10 +34,10 @@ export const GameTimer = ({ startGameDate, stopCounting }: GameTimerProps) => {
     // eslint-disable-next-line
   }, []);
 
-  return <Timer>Time: {formatTimerHelper(time)}</Timer>;
+  return <StyledTimer>Time: {formatTimerHelper(time)}</StyledTimer>;
 };
 
-const Timer = styled.div`
+const StyledTimer = styled.div`
   margin-top: 5px;
   font-size: 16px;
   font-family: monospace;

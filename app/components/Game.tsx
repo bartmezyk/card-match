@@ -3,16 +3,18 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-import { randomizeArrayHelper } from "common/helpers";
+import { prepareCardsHelper } from "common/helpers";
 import { CARDS } from "common/constants";
-import { CardInterface } from "common/types";
-import { GameTimer } from "components/GameTimer";
-import { Card } from "./Card";
+import { GameCardInterface } from "common/types";
+import { Timer } from "components/Timer";
+import { Card } from "components/Card";
 
 export const Game = () => {
-  const [cards, setCards] = useState<CardInterface[]>([]);
-  const [firstSelectedCard, setFirstSelectedCard] = useState<CardInterface>();
-  const [secondSelectedCard, setSecondSelectedCard] = useState<CardInterface>();
+  const [cards, setCards] = useState<GameCardInterface[]>([]);
+  const [firstSelectedCard, setFirstSelectedCard] =
+    useState<GameCardInterface>();
+  const [secondSelectedCard, setSecondSelectedCard] =
+    useState<GameCardInterface>();
   const [openCardIds, setOpenCardIds] = useState<number[]>([]);
   const [cardsOpenTimer, setCardsOpenTimer] = useState<NodeJS.Timeout>();
   const [startGameDate, setStartGameDate] = useState<Date>();
@@ -24,10 +26,10 @@ export const Game = () => {
     clearTimeout(cardsOpenTimer);
     setStartGameDate(undefined);
     setTurns(0);
-    setCards([...randomizeArrayHelper(CARDS)]);
+    setCards(prepareCardsHelper(CARDS));
   };
 
-  const handleCardClick = (card: CardInterface) => {
+  const handleCardClick = (card: GameCardInterface) => {
     if (!startGameDate) {
       setStartGameDate(new Date());
     }
@@ -46,7 +48,7 @@ export const Game = () => {
     if (firstSelectedCard && secondSelectedCard) {
       setTurns((prev) => prev + 1);
 
-      if (firstSelectedCard.name === secondSelectedCard.name) {
+      if (firstSelectedCard.pairId === secondSelectedCard.pairId) {
         clearSelectedCards();
         setOpenCardIds((prev) => [
           ...prev,
@@ -76,7 +78,7 @@ export const Game = () => {
   }, [secondSelectedCard]);
 
   useEffect(() => {
-    setCards([...randomizeArrayHelper(CARDS)]);
+    setCards(prepareCardsHelper(CARDS));
 
     return () => {
       clearTimeout(cardsOpenTimer);
@@ -105,7 +107,7 @@ export const Game = () => {
       </CardsContainer>
       <h4>Turns: {turns}</h4>
       {startGameDate && (
-        <GameTimer
+        <Timer
           startGameDate={startGameDate}
           stopCounting={openCardIds.length === 12}
         />
