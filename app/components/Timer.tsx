@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 
 import { formatTimerHelper } from "common/helpers";
 
@@ -34,11 +33,5 @@ export const Timer = ({ startDate, stopCounting }: TimerProps) => {
     // eslint-disable-next-line
   }, []);
 
-  return <StyledTimer>Time: {formatTimerHelper(time)}</StyledTimer>;
+  return <div className="timer">Time: {formatTimerHelper(time)}</div>;
 };
-
-const StyledTimer = styled.div`
-  margin-top: 5px;
-  font-size: 16px;
-  font-family: monospace;
-`;

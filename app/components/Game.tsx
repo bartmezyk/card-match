@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import Spinner from "react-spinner-material";
 
 import { prepareCardsHelper } from "common/helpers";
@@ -93,9 +92,11 @@ export const Game = () => {
   }, []);
 
   return (
-    <GameContainer>
-      <Header>card match</Header>
-      <Button onClick={() => startGame()}>new game</Button>
+    <div className="game-container">
+      <h1 className="game-header">card match</h1>
+      <button className="game-button" onClick={() => startGame()}>
+        new game
+      </button>
       {isLoading ? (
         <Spinner
           radius={60}
@@ -105,7 +106,7 @@ export const Game = () => {
         />
       ) : (
         <>
-          <CardsContainer>
+          <div className="game-cards-container">
             {cards.map((card) => (
               <Card
                 key={card.id}
@@ -118,7 +119,7 @@ export const Game = () => {
                 name={card.name}
               />
             ))}
-          </CardsContainer>
+          </div>
           <h4>Turns: {turns}</h4>
         </>
       )}
@@ -128,47 +129,6 @@ export const Game = () => {
           stopCounting={!cards.some((card) => !card.disabled)}
         />
       )}
-    </GameContainer>
+    </div>
   );
 };
-
-const GameContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 20px auto;
-`;
-
-const Header = styled.h1`
-  font-size: 36px;
-  text-transform: capitalize;
-  text-align: center;
-`;
-
-const Button = styled.button`
-  width: 140px;
-  height: 35px;
-  background-color: transparent;
-  color: white;
-  font-size: 20px;
-  text-transform: capitalize;
-  cursor: pointer;
-  border: 2px solid white;
-  border-radius: 4px;
-  margin: 25px 0;
-
-  &:hover {
-    background-color: #50255c;
-  }
-`;
-
-const CardsContainer = styled.div`
-  display: grid;
-  place-content: center;
-  width: 830px;
-  max-width: calc(100vw - 80px);
-  grid-template-columns: repeat(auto-fill, 200px);
-  grid-auto-rows: 200px;
-  gap: 10px;
-  margin-bottom: 15px;
-`;
