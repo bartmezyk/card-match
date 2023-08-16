@@ -33,5 +33,9 @@ export const Timer = ({ startDate, stopCounting }: TimerProps) => {
     // eslint-disable-next-line
   }, []);
 
-  return <div className="timer">Time: {formatTimerHelper(time)}</div>;
+  return (
+    <h4 className="mt-1 text-base font-mono">
+      Time: {formatTimerHelper(time)}
+    </h4>
+  );
 };

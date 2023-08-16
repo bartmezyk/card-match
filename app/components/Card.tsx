@@ -7,13 +7,17 @@ interface CardProps {
 export const Card = ({ isOpen, name, handleClick }: CardProps) => {
   return (
     <div
-      className={`card-container ${isOpen ? "no-pointer-events" : ""}`}
+      className={`cursor-pointer ${isOpen ? "pointer-events-none" : ""}`}
       onClick={handleClick}
     >
-      <div className={`card-wrapper ${isOpen ? "card-open" : ""}`}>
-        <div className="card" />
+      <div
+        className={`preserve-3d transition-all duration-300 border-2 border-solid border-white hover:border-fuchsia-800 rounded w-full h-full card-wrapper ${
+          isOpen ? "rotate-y-180 border-zinc-500" : ""
+        }`}
+      >
+        <div className="absolute w-full h-full backface-hidden bg-cardCover" />
         <div
-          className="card card-back"
+          className="absolute w-full h-full backface-hidden rotate-y-180"
           style={{ backgroundImage: `url("./img/${name}")` }}
         />
       </div>

@@ -92,9 +92,12 @@ export const Game = () => {
   }, []);
 
   return (
-    <div className="game-container">
-      <h1 className="game-header">card match</h1>
-      <button className="game-button" onClick={() => startGame()}>
+    <div className="flex flex-col items-center my-5 mx-auto">
+      <h1 className="text-4xl font-bold capitalize text-center">card match</h1>
+      <button
+        className="w-36 h-9 bg-transparent hover:bg-fuchsia-950 text-xl capitalize cursor-pointer border-2 border-solid border-white rounded my-6"
+        onClick={() => startGame()}
+      >
         new game
       </button>
       {isLoading ? (
@@ -106,7 +109,7 @@ export const Game = () => {
         />
       ) : (
         <>
-          <div className="game-cards-container">
+          <div className="grid place-content-center w-[830px] max-w-cards grid-cols-cards auto-rows-cards gap-2.5 mb-4">
             {cards.map((card) => (
               <Card
                 key={card.id}
@@ -120,7 +123,7 @@ export const Game = () => {
               />
             ))}
           </div>
-          <h4>Turns: {turns}</h4>
+          {startDate && <h4 className="font-mono">Turns: {turns}</h4>}
         </>
       )}
       {startDate && (
