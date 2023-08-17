@@ -8,15 +8,17 @@ import { CARDS } from "common/constants";
 import { GameCardInterface } from "common/types";
 import { Timer } from "components/Timer";
 import { Card } from "components/Card";
+import { useDateStore, DateState } from "common/store";
 
 export const Game = () => {
+  const { startDate, setStartDate } = useDateStore((state: DateState) => state);
+
   const [cards, setCards] = useState<GameCardInterface[]>([]);
   const [firstSelectedCard, setFirstSelectedCard] =
     useState<GameCardInterface>();
   const [secondSelectedCard, setSecondSelectedCard] =
     useState<GameCardInterface>();
   const [cardsOpenTimer, setCardsOpenTimer] = useState<NodeJS.Timeout>();
-  const [startDate, setStartDate] = useState<Date>();
   const [turns, setTurns] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -127,10 +129,7 @@ export const Game = () => {
         </>
       )}
       {startDate && (
-        <Timer
-          startDate={startDate}
-          stopCounting={!cards.some((card) => !card.disabled)}
-        />
+        <Timer stopCounting={!cards.some((card) => !card.disabled)} />
       )}
     </div>
   );
